@@ -45,3 +45,7 @@ db.one('INSERT INTO antigaspi.Offers(id, title, description, email, companyName,
    res.send(error);
 })})
 app.listen(process.env.API_PORT, () => console.log(`Listening on port ${process.env.API_PORT}`));
+
+export const calculate = () => {
+   return 1
+}
