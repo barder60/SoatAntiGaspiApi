@@ -1,10 +1,8 @@
-name: Node.js CI
+name: Test Suite
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [ dev, main ]
 
 jobs:
   build:
@@ -22,5 +20,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run build --if-present
       - run: npm run test
