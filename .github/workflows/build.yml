@@ -1,4 +1,8 @@
 name: Build Deploy Azure
+on:
+  push:
+    branches: [ "main" ]
+
 deploy:
   runs-on: ubuntu-latest
   needs: build
