@@ -1,8 +1,8 @@
-{
+  {
     "compilerOptions": {
       "baseUrl": ".",
-      "target": "es2017",
-      "module": "CommonJS",
+      "target": "esnext",
+      "module": "commonjs",
       "lib": ["esnext"],
       "moduleResolution": "node",
       "esModuleInterop": true,

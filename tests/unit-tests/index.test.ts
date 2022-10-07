@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { calculate } from '../../src/index';
+import { calculate } from '../../src/app';
 
 describe('calculate function', () => {
   test('should return 1', () => {
