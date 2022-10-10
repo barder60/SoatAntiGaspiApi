@@ -7,6 +7,6 @@ describe('calculate function', () => {
     return request(app)
       .get("/offers")
       .expect("Content-Type", /json/)
-      .expect(200)
+      .expect(201)
   })
 })
