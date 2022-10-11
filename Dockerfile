@@ -10,5 +10,5 @@ ENV NODE_ENV=production
 RUN npm run build
 COPY . .
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "debug"]
 EXPOSE $api_port
