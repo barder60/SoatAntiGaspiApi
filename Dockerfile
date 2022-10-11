@@ -4,11 +4,13 @@ WORKDIR /src
 COPY package*.json /
 ENV NODE_ENV=development
 RUN npm ci
+RUN npm install\
+        && npm install typescript -g
 COPY . .
 
-ENV NODE_ENV=production
-RUN npm run build
+ENV NODE_ENV=development
+RUN tsc
 COPY . .
 
-CMD ["npm", "run", "debug"]
+CMD ["node", "./dist/server.js"]
 EXPOSE $api_port
