@@ -46,6 +46,28 @@ paths:
         "500":
           description: Internal Server Error
       security:
+      - bearerAuth: []
+  "/offer/{id}":
+    get:
+      tags:
+      - Offers
+      description: "Get an offer by his ID"
+      parameters:
+      - $ref: "#/components/parameters/idParam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Offers"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      security:
       - bearerAuth: []            
 components:
   securitySchemes:
@@ -96,4 +118,14 @@ components:
           type: string
           exemple: "2022/05/23"
         status: 
-          type: string                
+          type: string
+  parameters:
+    
+    # Path Params
+    idParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+                    
