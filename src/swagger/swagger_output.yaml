@@ -68,9 +68,9 @@ components:
         address:
           type: string   
         availability:
-          type: date
+          type: string
         expiration: 
-          type: date
+          type: string
         status: 
           type: string   
   schemas:
@@ -90,8 +90,10 @@ components:
         address:
           type: string   
         availability:
-          type: date
+          type: string
+          exemple: "2022/05/23"
         expiration: 
-          type: date
+          type: string
+          exemple: "2022/05/23"
         status: 
           type: string                
