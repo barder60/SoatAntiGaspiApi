@@ -13,6 +13,7 @@ const swaggerFile = yaml.load(fs.readFileSync('./src/swagger/swagger_output.yaml
 //import routes
 
 import offer from "./router/routes/offers.routes";
+import user from "./router/routes/users.routes";
 
 app
   .set('view engine', 'ejs')
@@ -21,6 +22,7 @@ app
 
 
 app.use('/', offer)
+app.use('/', user)
 
 
 
