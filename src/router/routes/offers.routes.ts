@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import getConnection from '../../models';
 import moment from 'moment';
+import { copyFileSync } from "fs";
 
 
 const db = getConnection();
@@ -24,7 +25,8 @@ router.get('/offers', async(req, res) => {
     }
 })
 
-router.get('/offer/:id', async(req, res) => {
+router
+.get('/offer/:id', async(req, res) => {
     try {
         const { id } = req.params
         const offersGetted = await Offer.findByPk(id, {
@@ -38,6 +40,25 @@ router.get('/offer/:id', async(req, res) => {
             return res.status(404).json({ message: 'The requested resource does not exist.' })
     }
 })
+.delete('/offer/:id', async(req, res) => {
+    try {
+        const { id } = req.params
+        await Offer.destroy({
+            where: {
+                id
+            }
+        })
+
+        res.status(204)
+
+    } catch (err: any) {
+        console.log(err)
+        console.log('name', err.name)
+        if (err.name === 'SequelizeEmptyResultError')
+            return res.status(404).json({ message: 'The requested resource does not exist.' })
+    }
+})
+
 
 
 router.post('/offers', async(req, res) => {
