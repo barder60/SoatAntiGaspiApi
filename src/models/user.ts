@@ -50,6 +50,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
     }
     ,email: {
         type: DataTypes.STRING,
+        validate:{
+          isEmail: true
+        },
         unique: 'Email already taken',
 
     },

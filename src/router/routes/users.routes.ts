@@ -66,6 +66,7 @@ router.post('/users', async(req, res) => {
     try {
 
         const { body: newUser}  = req
+        
         let newBody = {
             ...newUser
         }
