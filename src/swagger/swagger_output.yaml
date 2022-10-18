@@ -8,6 +8,60 @@ basePath: /
 schemes:
   - http
 paths:
+  /registration:
+    post:
+      tags:
+      - Login
+      summary: Register and get token.
+      description: ""
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/AddUser"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Registration"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      security:
+      - bearerAuth: []
+  /login:
+    post:
+      tags:
+      - Login
+      summary: Log in and get token.
+      description: ""
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/Login"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Login"
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      security:
+      - bearerAuth: []
   /offers:
     get:
       tags:
@@ -208,8 +262,31 @@ components:
           type: string   
         password: 
           type: string
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+        password: 
+          type: string
 
   schemas:
+    Registration:
+      type: object
+      properties:
+        firstName: 
+          type: string
+        lastName:
+          type: string
+        username: 
+          type: string
+        token: 
+          type: string
+    Login:
+      type: object
+      properties:
+        token: 
+          type: string
     Offers:
       type: object
       properties:
