@@ -58,37 +58,40 @@ module.exports = (sequelize: any, DataTypes: any) => {
     description: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: false
     },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        validate: {
+          isEmail: true
+        },
+        unique: false
     },
     companyName: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: false
       },
     address: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: false
     },
     availability: {
         type: DataTypes.DATE,
         allowNull: false,
-        unique: true
+        unique: false
     },
     expiration: {
         type: DataTypes.DATE,
         allowNull: false,
-        unique: true
+        unique: false
     },
     status: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: false
     },
 
     

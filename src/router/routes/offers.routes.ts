@@ -4,6 +4,7 @@ import getConnection from '../../models';
 import moment from 'moment';
 import { copyFileSync } from "fs";
 import {isInTheFuture} from '../../service/date.service'
+import {preparePaginationOptions} from '../../service/pagination.service'
 
 
 const db = getConnection();
@@ -12,11 +13,17 @@ const {Offer} = db
 
 router.get('/offers', async(req, res) => {
     try {
-        
-        const offersGetted = await Offer.findAll({
+
+        const { query } = req;
+        const pagination = preparePaginationOptions(query)
+
+        const options = {
             attributes: ["id", "title", "description"],
-            rejectOnEmpty: true
-        })
+            rejectOnEmpty: true,
+            ...pagination
+        }
+        
+        const offersGetted = await Offer.findAll(options)
 
         res.status(200).json({ offersGetted })
 
@@ -83,7 +90,8 @@ router.post('/offers', async(req, res) => {
         res.status(201).json({ offersCreated })
 
     } catch (err: any) {
-        if (err.name === 'SequelizeValidationError')
+        console.log(err)
+        if (err.name === 'SequelizeValidationError'|| err.name === 'SequelizeUniqueConstraintError')
             return res.status(404).json({ message: err.message })
         if (err.name === 'SequelizeEmptyResultError')
             return res.status(404).json({ message: 'The requested resource does not exist.' })

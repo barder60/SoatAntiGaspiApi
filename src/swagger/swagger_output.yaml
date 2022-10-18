@@ -14,6 +14,9 @@ paths:
         - Offers
       summary: Returns a list of offers.
       description: Optional extended description in Markdown.
+      parameters: 
+      - $ref: "#/components/parameters/pageParam"
+      - $ref: "#/components/parameters/limitParam"
       responses:
         200:
           description: OK
@@ -261,4 +264,13 @@ components:
       required: true
       schema:
         type: string
-                    
+    pageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+    limitParam:
+      name: limit
+      in: query
+      schema:
+        type: integer                    
