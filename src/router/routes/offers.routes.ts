@@ -3,7 +3,7 @@ const router = express.Router();
 import getConnection from '../../models';
 import moment from 'moment';
 import { copyFileSync } from "fs";
-import {isInTheFuture} from '../../service/date.service'
+import {isInTheFuture, compareTwoDates} from '../../service/date.service'
 import {preparePaginationOptions} from '../../service/pagination.service'
 
 
@@ -82,6 +82,10 @@ router.post('/offers', async(req, res) => {
 
         if((isInTheFuture(newBody.expiration) && isInTheFuture(newBody.availability)) === false)
             return res.status(404).json({message: 'Expiration and availability date must be in the future, please verify your body'})
+
+        if(compareTwoDates(newBody.expiration, newBody.availability) === false) 
+        return res.status(404).json({message: 'Expiration date must be greater than availability date'})
+
         
         const offersCreated = await Offer.create({
             ...newBody

@@ -6,3 +6,8 @@ export const isInTheFuture = (date: Date) => {
   return date > today
 }
 
+export const compareTwoDates = (date1: Date, date2: Date) => {
+ if(date1 > date2) return true
+ else return false
+}
+
