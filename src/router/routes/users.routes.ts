@@ -88,7 +88,8 @@ router.post('/users', async(req, res) => {
         })
 
     } catch (err: any) {
-        console.log(err)
+        if(err.name === 'SequelizeUniqueConstraintError')
+            return res.status(404).json({message: 'Username and Email must be unique'})
         if (err.name === 'SequelizeValidationError')
             return res.status(404).json({ message: err.message })
         if (err.name === 'SequelizeEmptyResultError')

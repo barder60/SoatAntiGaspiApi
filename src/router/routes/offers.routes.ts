@@ -3,6 +3,7 @@ const router = express.Router();
 import getConnection from '../../models';
 import moment from 'moment';
 import { copyFileSync } from "fs";
+import {isInTheFuture} from '../../service/date.service'
 
 
 const db = getConnection();
@@ -71,6 +72,9 @@ router.post('/offers', async(req, res) => {
 
         newBody.expiration = new Date(newOffer.expiration)
         newBody.availability = new Date(newOffer.availability)
+
+        if((isInTheFuture(newBody.expiration) && isInTheFuture(newBody.availability)) === false)
+            return res.status(404).json({message: 'Expiration and availability date must be in the future, please verify your body'})
         
         const offersCreated = await Offer.create({
             ...newBody
