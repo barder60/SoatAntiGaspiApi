@@ -11,7 +11,7 @@ enum OfferStatus {
     Deleted 
   }
   interface OfferAttributes {
-    id: number;
+    id: string;
     title: string
     description: string
     email: string
@@ -31,7 +31,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-     id: number;
+     id: string;
      title: string
      description: string
      email: string
@@ -58,37 +58,40 @@ module.exports = (sequelize: any, DataTypes: any) => {
     description: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: false
     },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        validate: {
+          isEmail: true
+        },
+        unique: false
     },
     companyName: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: false
       },
     address: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: false
     },
     availability: {
         type: DataTypes.DATE,
         allowNull: false,
-        unique: true
+        unique: false
     },
     expiration: {
         type: DataTypes.DATE,
         allowNull: false,
-        unique: true
+        unique: false
     },
     status: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: false
     },
 
     
