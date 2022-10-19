@@ -1,47 +1,31 @@
-'use strict';
+import { getConfig } from "../config";
+import fs from "fs";
+import path from "path";
+import { Sequelize, DataTypes } from "sequelize";
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const basename = path.basename(__filename);
-const env = 'development';
-const config = {
-    "username": 'user',
-    "password": 'password',
-    "database": 'antigaspi',
-    "host": "postgres",
-    "dialect": "postgres"
-};
 const db: any = {};
 
-let sequelize: any;
+export async function connectDb() {
+	const config = getConfig();
+	const sequelize = new Sequelize(config.DB_NAME, config.DB_USER, config.DB_PASSWORD, {
+		dialect: config.DB_DIALECT,
+		host: config.DB_HOST
+	});
+	const modelsFiles = fs.readdirSync(__dirname).filter(file => !file.includes("index"));
 
-sequelize = new Sequelize(config.database, config.username, config.password, config);
+	db.Sequelize = Sequelize;
+	db.sequelize = sequelize;
 
-function getConnection() {
-  fs
-    .readdirSync(__dirname)
-    .filter((file: string) => {
-      return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.ts');
-    })
-    .forEach((file: any) => {
-      const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-      console.log("dfefefef", model)
-      db[model.name] = model;
-    });
+	for (let i = 0; i < modelsFiles.length; i++) {
+		const filePath = path.join(__dirname, modelsFiles[i]);
+		const model = require(filePath)(sequelize, DataTypes);
 
-  Object.keys(db).forEach(modelName => {
-    if (db[modelName].associate) {
-      db[modelName].associate(db);
-    }
-  });
+		db[model.name];
+	}
 
-  db.sequelize = sequelize;
-  db.Sequelize = Sequelize;
-
-  console.log('\x1b[31m' + __dirname + '\x1b[37m');
-
-  return db;
+	return db;
 }
 
-export default getConnection;
+export function getDb() {
+	return db;
+}
